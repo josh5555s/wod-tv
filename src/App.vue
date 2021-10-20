@@ -1,26 +1,73 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <router-view :sortedSpecials="sortedSpecials" :stores="stores"> </router-view>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      allSpecials: [],
+      stores: [
+        { url: "cedarMill", name: "Cedar Mill" },
+        { url: "hillsboro", name: "Hillsboro" },
+        { url: "newberg", name: "Newberg" },
+        { url: "sherwood", name: "Sherwood" },
+      ],
+    };
+  },
+  computed: {
+    sortedSpecials() {
+      let sortedSpecials = this.allSpecials;
+      const prop = "id";
+      sortedSpecials = sortedSpecials.sort((a, b) => {
+        return a[prop] - b[prop];
+      });
+      return sortedSpecials;
+    },
+  },
+  methods: {
+    getSpecials() {
+      console.log("getting specials...");
+      fetch("https://api.westernoregondispensary.com/specials")
+        .then((response) => response.json())
+        .then((data) => (this.allSpecials = JSON.parse(data)));
+      // .then(() => console.log("# of specials", this.allSpecials.length))
+      // .then(() => console.log("specials", this.allSpecials));
+    },
+  },
+  created() {
+    this.getSpecials();
+  },
+};
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: white;
+  height: 100vh;
+  list-style-type: none;
+}
+
+h1 {
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: normal;
+}
+ul {
+  padding-left: 0;
 }
 </style>
