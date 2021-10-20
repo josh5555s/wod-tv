@@ -1,5 +1,10 @@
 <template>
-  <router-view :sortedSpecials="sortedSpecials" :stores="stores"> </router-view>
+  <router-view
+    :sortedSpecials="sortedSpecials"
+    :stores="stores"
+    @get-specials="getSpecials"
+  >
+  </router-view>
 </template>
 
 <script>
@@ -28,7 +33,7 @@ export default {
   },
   methods: {
     getSpecials() {
-      console.log("getting specials...");
+      // console.log("getting specials...");
       fetch("https://api.westernoregondispensary.com/specials")
         .then((response) => response.json())
         .then((data) => (this.allSpecials = JSON.parse(data)));

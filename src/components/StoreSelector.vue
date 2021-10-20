@@ -1,14 +1,16 @@
 <template>
   <base-background>
-    <ul class="select-menu">
-      <li v-for="store in stores" v-bind:key="store.url">
-        <router-link :to="`${store.url}`">
-          <h1>
-            {{ store.name }}
-          </h1>
-        </router-link>
-      </li>
-    </ul>
+    <div class="column-container">
+      <ul class="select-menu">
+        <li v-for="store in stores" v-bind:key="store.url">
+          <router-link :to="`${store.url}`">
+            <h1>
+              {{ store.name }}
+            </h1>
+          </router-link>
+        </li>
+      </ul>
+    </div>
   </base-background>
 </template>
 
@@ -25,6 +27,17 @@ export default {
 </script>
 
 <style scoped>
+.column-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+ul {
+  width: 500px;
+  list-style: none;
+}
+
 a,
 a:link,
 a:visited,

@@ -16,6 +16,7 @@ export default {
     BaseBackground,
   },
   props: ["sortedSpecials", "stores"],
+  emits: ["get-specials"],
   data() {
     return {
       specialIndex: 0,
@@ -62,9 +63,11 @@ export default {
   methods: {
     updateIndexes(value) {
       this.backgroundIndex = value;
-
+      // console.log(this.backgroundIndex);
       if (this.specialIndex < this.currentStoreSpecials.length - 1) {
-        // console.log(this.backgroundIndex);
+        if (this.specialIndex === this.currentStoreSpecials.length - 2) {
+          this.$emit("get-specials");
+        }
         this.specialIndex++;
       } else {
         this.specialIndex = 0;
