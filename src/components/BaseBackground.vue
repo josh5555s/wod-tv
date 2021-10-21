@@ -32,7 +32,7 @@ export default {
   methods: {
     next() {
       // get list of .jpg in backgrounds directory (https://stackoverflow.com/questions/48850155/vue-js-webpack-how-to-get-the-list-of-files-in-a-directory)
-      // cannot use dynamic variable in assets string, because it is solve at compile, not at run.
+      // cannot use dynamic variable in assets string, because it is solved at compile, not at run.
       const seasonalBackgrounds = {};
       seasonalBackgrounds.spring = require.context(
         `@/assets/backgrounds/spring`,
