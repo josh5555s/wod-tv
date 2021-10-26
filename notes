@@ -1,8 +1,5 @@
-fade from one background/special to the next
-
 need to add spring and winter backgrounds at 1080px and with dark tint
-
-reoccuring refresh season check
 
 Fix the undefined specials at the source
 
+clear interval if going back to store selection menu?

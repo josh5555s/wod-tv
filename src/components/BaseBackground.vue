@@ -1,14 +1,26 @@
 <template>
-  <div
-    v-if="seasonIsLoaded"
-    id="background"
-    :style="{
-      backgroundImage: `url(${require(`@/assets/backgrounds/${season}/${backgroundIndex}.jpg`)})`,
-    }"
-  >
+  <div v-if="seasonIsLoaded" class="background-container">
+    <div
+      id="under-background"
+      class="background"
+      :style="{
+        backgroundImage: `url(${require(`@/assets/backgrounds/${season}/${underBackgroundIndex}.jpg`)})`,
+      }"
+    ></div>
+
+    <div
+      id="top-background"
+      class="background"
+      :style="{
+        opacity: topTranspanency,
+        backgroundImage: `url(${require(`@/assets/backgrounds/${season}/${topBackgroundIndex}.jpg`)})`,
+      }"
+    ></div>
+
     <div id="vertical-container">
       <slot></slot>
     </div>
+
     <div id="logo">
       <router-link to="./">
         <img id="logo" src="./../assets/logo.png" />
@@ -20,8 +32,14 @@
 export default {
   data() {
     return {
+      duration: 2000,
       backgroundIndex: 0,
+      underBackgroundIndex: 1,
+      topBackgroundIndex: 0,
       season: "",
+      hideTop: false,
+      loadTopBackground: false,
+      topTranspanency: 1,
     };
   },
   computed: {
@@ -54,21 +72,72 @@ export default {
         true,
         /^.*\.jpg$/
       );
-      setInterval(() => {
+      const backgroundsLength = seasonalBackgrounds[this.season].keys().length;
+      // console.log("backgroundsLength");
+      // console.log(backgroundsLength);
+      let backgroundInterval = setInterval(() => {
         // console.log(backgrounds.keys());
-        if (
-          this.backgroundIndex <
-          seasonalBackgrounds[this.season].keys().length - 1
-        ) {
-          // console.log(this.backgroundIndex);
+        if (this.backgroundIndex < (backgroundsLength - 1) * 2 - 1) {
+          if (this.backgroundIndex % 2 == 0) {
+            // is even
+            this.hideTop = !this.hideTop;
+            if (this.hideTop) {
+              this.topTranspanency = 0; // transparent
+            } else {
+              this.topTranspanency = 1; // visible
+            }
+          } else if (this.backgroundIndex % 2 == 1) {
+            // is odd
+            this.loadTopBackground = !this.loadTopBackground;
+            if (this.loadTopBackground) {
+              this.topBackgroundIndex = this.topBackgroundIndex + 2;
+            } else {
+              this.underBackgroundIndex = this.underBackgroundIndex + 2;
+            }
+          }
           this.backgroundIndex++;
         } else {
-          this.backgroundIndex = 0;
+          clearInterval(backgroundInterval);
+          this.$emit("update-backgroundIndex");
+
+          if (backgroundsLength % 2 == 1) {
+            // is odd
+            this.underBackgroundIndex = 0;
+
+            setTimeout(() => {
+              // next slide transition
+              this.topTranspanency = 0;
+              this.backgroundIndex++;
+              setTimeout(() => {
+                // cross fade between same background for i = i.length and i = 0
+                this.topBackgroundIndex = 1;
+              }, this.duration / 2);
+            }, this.duration);
+          } else {
+            // is even - one i before switch to next slide
+            this.topBackgroundIndex = 0;
+
+            setTimeout(() => {
+              // next slide transition
+              this.topTranspanency = 1;
+              this.backgroundIndex++;
+            }, this.duration);
+          }
+          // whether odd or even
+          setTimeout(() => {
+            this.backgroundIndex = 0;
+            this.topBackgroundIndex = 0;
+            this.hideTop = false;
+            this.loadTopBackground = false;
+            this.topTranspanency = 1;
+            this.next();
+            setTimeout(() => {
+              // cross fade between same background for i = i.length and i = 0
+              this.underBackgroundIndex = 1;
+            }, this.duration / 2);
+          }, this.duration * 2);
         }
-      }, 4000);
-    },
-    updateBackgroundIndex() {
-      this.$emit("update-backgroundIndex", this.backgroundIndex);
+      }, this.duration);
     },
     seasons() {
       let d = new Date();
@@ -95,21 +164,31 @@ export default {
   },
   watch: {
     backgroundIndex() {
-      this.updateBackgroundIndex();
+      this.$emit("update-backgroundIndex");
     },
   },
 };
 </script>
 
 <style scoped>
-#background {
+.background {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
   background-size: cover;
+  margin: 0;
 }
 #vertical-container {
+  position: fixed;
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#top-background {
+  transition: opacity 1.4s;
 }
 
 #logo {

@@ -21,6 +21,7 @@ export default {
     return {
       specialIndex: 0,
       backgroundIndex: 0,
+      updateIndexTurn: false,
     };
   },
   computed: {
@@ -61,16 +62,21 @@ export default {
     },
   },
   methods: {
-    updateIndexes(value) {
-      this.backgroundIndex = value;
-      // console.log(this.backgroundIndex);
-      if (this.specialIndex < this.currentStoreSpecials.length - 1) {
-        if (this.specialIndex === this.currentStoreSpecials.length - 2) {
-          this.$emit("get-specials");
+    updateIndexes() {
+      this.updateIndexTurn = !this.updateIndexTurn;
+      if (this.updateIndexTurn) {
+        if (this.specialIndex < this.currentStoreSpecials.length - 1) {
+          if (this.specialIndex === this.currentStoreSpecials.length - 2) {
+            this.$emit("get-specials");
+          }
+          setTimeout(() => {
+            this.specialIndex++;
+          }, 200);
+        } else {
+          setTimeout(() => {
+            this.specialIndex = 0;
+          }, 200);
         }
-        this.specialIndex++;
-      } else {
-        this.specialIndex = 0;
       }
     },
   },
