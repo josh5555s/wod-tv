@@ -141,16 +141,18 @@ export default {
     },
     seasons() {
       let d = new Date();
-      // let d = new Date(1988, 10, 15, 0); // for testing
+      // let d = new Date(1988, 4, 15, 0); // for testing
       d.setFullYear(1988); // ignore year with static placeholder
       const spring = new Date(1988, 4, 1, 0); // March 1st
+      const summer = new Date(1988, 6, 1, 0); // May 1st
       const fall = new Date(1988, 8, 1, 0); // September 1st
       const halloween = new Date(1988, 9, 25, 0); // October 25th
       const halloweenEnd = new Date(1988, 10, 1, 0); // November 1st
       const winter = new Date(1988, 11, 0); // December 1st
 
       if (d < spring) this.season = "winter";
-      if (d > spring && d < fall) this.season = "spring";
+      if (d > spring && d < summer) this.season = "spring";
+      if (d > summer && d < fall) this.season = "summer";
       if (d > fall && d < halloween) this.season = "fall";
       if (d > halloween && d < halloweenEnd) this.season = "halloween";
       if (d > halloweenEnd && d < winter) this.season = "fall";
