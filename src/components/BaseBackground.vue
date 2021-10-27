@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       duration: 2000,
+      backgroundInterval: "",
       backgroundIndex: 0,
       underBackgroundIndex: 1,
       topBackgroundIndex: 0,
@@ -48,6 +49,9 @@ export default {
     },
   },
   methods: {
+    clearBackgroundInterval() {
+      clearInterval(this.backgroundInterval);
+    },
     next() {
       // get list of .jpg in backgrounds directory (https://stackoverflow.com/questions/48850155/vue-js-webpack-how-to-get-the-list-of-files-in-a-directory)
       // cannot use dynamic variable in assets string, because it is solved at compile, not at run.
@@ -75,7 +79,7 @@ export default {
       const backgroundsLength = seasonalBackgrounds[this.season].keys().length;
       // console.log("backgroundsLength");
       // console.log(backgroundsLength);
-      let backgroundInterval = setInterval(() => {
+      this.backgroundInterval = setInterval(() => {
         // console.log(backgrounds.keys());
         if (this.backgroundIndex < (backgroundsLength - 1) * 2 - 1) {
           if (this.backgroundIndex % 2 == 0) {
@@ -97,7 +101,7 @@ export default {
           }
           this.backgroundIndex++;
         } else {
-          clearInterval(backgroundInterval);
+          this.clearBackgroundInterval();
           this.$emit("update-backgroundIndex");
 
           if (backgroundsLength % 2 == 1) {
@@ -163,6 +167,9 @@ export default {
   mounted() {
     this.seasons();
     this.next();
+  },
+  unmounted() {
+    this.clearBackgroundInterval();
   },
   watch: {
     backgroundIndex() {
