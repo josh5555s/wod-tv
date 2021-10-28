@@ -94,5 +94,6 @@ h2 {
   font-size: 6rem;
   font-weight: normal;
   margin-top: 2rem;
+  white-space: pre-wrap;
 }
 </style>
