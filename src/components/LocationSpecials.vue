@@ -84,4 +84,15 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-size: 8rem;
+  font-weight: bold;
+  margin-bottom: 3rem;
+}
+
+h2 {
+  font-size: 6rem;
+  font-weight: normal;
+  margin-top: 2rem;
+}
 </style>

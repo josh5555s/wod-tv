@@ -68,10 +68,6 @@ h1 {
   font-weight: bold;
 }
 
-h2 {
-  font-size: 3rem;
-  font-weight: normal;
-}
 ul {
   padding-left: 0;
 }
