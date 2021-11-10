@@ -32,7 +32,7 @@
 export default {
   data() {
     return {
-      duration: 2000,
+      duration: 3000,
       backgroundInterval: "",
       backgroundIndex: 0,
       underBackgroundIndex: 1,
