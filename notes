@@ -1,3 +1,12 @@
 summer needs more images
 
 add subDescription to specials for text like, "while supplies last" or "every last weekend".
+
+
+
+
+--------------- deploy to windows task scheduler -----------
+
+"C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+--start-fullscreen "https://tv.westernoregondispensary.com/newberg"

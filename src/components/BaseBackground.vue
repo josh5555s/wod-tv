@@ -33,11 +33,11 @@ export default {
   data() {
     return {
       duration: 3000,
-      backgroundInterval: "",
+      backgroundInterval: '',
       backgroundIndex: 0,
       underBackgroundIndex: 1,
       topBackgroundIndex: 0,
-      season: "",
+      season: '',
       hideTop: false,
       loadTopBackground: false,
       topTranspanency: 1,
@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     seasonIsLoaded() {
-      return this.season !== "";
+      return this.season !== '';
     },
   },
   methods: {
@@ -58,6 +58,11 @@ export default {
       const seasonalBackgrounds = {};
       seasonalBackgrounds.spring = require.context(
         `@/assets/backgrounds/spring`,
+        true,
+        /^.*\.jpg$/
+      );
+      seasonalBackgrounds.summer = require.context(
+        `@/assets/backgrounds/summer`,
         true,
         /^.*\.jpg$/
       );
@@ -102,7 +107,7 @@ export default {
           this.backgroundIndex++;
         } else {
           this.clearBackgroundInterval();
-          this.$emit("update-backgroundIndex");
+          this.$emit('update-backgroundIndex');
 
           if (backgroundsLength % 2 == 1) {
             // is odd
@@ -147,20 +152,20 @@ export default {
       let d = new Date();
       // let d = new Date(1988, 4, 15, 0); // for testing
       d.setFullYear(1988); // ignore year with static placeholder
-      const spring = new Date(1988, 4, 1, 0); // March 1st
-      const summer = new Date(1988, 6, 1, 0); // May 1st
+      const spring = new Date(1988, 1, 1, 0); // February 1st
+      const summer = new Date(1988, 4, 1, 0); // May 1st
       const fall = new Date(1988, 8, 1, 0); // September 1st
       const halloween = new Date(1988, 9, 25, 0); // October 25th
       const halloweenEnd = new Date(1988, 10, 1, 0); // November 1st
       const winter = new Date(1988, 11, 0); // December 1st
 
-      if (d < spring) this.season = "winter";
-      if (d > spring && d < summer) this.season = "spring";
-      if (d > summer && d < fall) this.season = "summer";
-      if (d > fall && d < halloween) this.season = "fall";
-      if (d > halloween && d < halloweenEnd) this.season = "halloween";
-      if (d > halloweenEnd && d < winter) this.season = "fall";
-      if (d > winter) this.season = "winter";
+      if (d < spring) this.season = 'winter';
+      if (d > spring && d < summer) this.season = 'spring';
+      if (d > summer && d < fall) this.season = 'summer';
+      if (d > fall && d < halloween) this.season = 'fall';
+      if (d > halloween && d < halloweenEnd) this.season = 'halloween';
+      if (d > halloweenEnd && d < winter) this.season = 'fall';
+      if (d > winter) this.season = 'winter';
       console.log(this.season);
     },
   },
@@ -173,7 +178,7 @@ export default {
   },
   watch: {
     backgroundIndex() {
-      this.$emit("update-backgroundIndex");
+      this.$emit('update-backgroundIndex');
     },
   },
 };
