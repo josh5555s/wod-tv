@@ -18,6 +18,7 @@ export default {
         { url: "hillsboro", name: "Hillsboro" },
         { url: "newberg", name: "Newberg" },
         { url: "sherwood", name: "Sherwood" },
+        { url: "beaverton", name: "Beaverton" },
       ],
     };
   },
