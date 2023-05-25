@@ -41,10 +41,10 @@ export default {
     },
     currentStoreSpecials() {
       return this.storeSpecials.filter((special) => {
-        return (
-          new Date(special.start).getTime() < new Date(this.now).getTime() &&
-          new Date(this.now).getTime() < new Date(special.end).getTime()
-        );
+        const start = new Date(special.start_date).getTime();
+        const end = new Date(special.end_date).getTime();
+        const now = new Date(this.now).getTime();
+        return start < now && now < end;
       });
     },
     storeSpecialsLoaded() {
