@@ -35,7 +35,8 @@ export default {
   methods: {
     getSpecials() {
       // console.log("getting specials...");
-      fetch("https://api.westernoregondispensary.com/specials")
+      // fetch("https://api.westernoregondispensary.com/specials")
+      fetch("https://wod-users.herokuapp.com/specials/")
         .then((response) => response.json())
         .then((data) => (this.allSpecials = JSON.parse(data)));
       // .then(() => console.log("# of specials", this.allSpecials.length))
