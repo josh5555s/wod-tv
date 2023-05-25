@@ -33,14 +33,18 @@ export default {
     },
   },
   methods: {
-    getSpecials() {
-      // console.log("getting specials...");
-      // fetch("https://api.westernoregondispensary.com/specials")
-      fetch("https://wod-users.herokuapp.com/specials/")
-        .then((response) => response.json())
-        .then((data) => (this.allSpecials = JSON.parse(data)));
-      // .then(() => console.log("# of specials", this.allSpecials.length))
-      // .then(() => console.log("specials", this.allSpecials));
+    async getSpecials() {
+      try {
+        // fetch("https://api.westernoregondispensary.com/specials")
+        const response = await fetch("https://wod-users.herokuapp.com/specials/")
+        // const response = await fetch("http://192.168.1.86:8000/specials/");
+        this.allSpecials = await response.json();
+      } catch (error) {
+        // Handle error
+        console.log(error);
+      }
+
+
     },
   },
   created() {
